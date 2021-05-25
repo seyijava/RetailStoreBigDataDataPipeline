@@ -14,6 +14,5 @@ object Domain {
     def apply(productCode: String ,quantity: Int, unitAmount: BigDecimal) = new ItemSale(productCode,quantity,unitAmount, totalAmount = unitAmount * quantity)
 
   }
-
   case class DailySaleRecord(store: Store, itemSale: ItemSale, transactionDate: Instant)
 }
