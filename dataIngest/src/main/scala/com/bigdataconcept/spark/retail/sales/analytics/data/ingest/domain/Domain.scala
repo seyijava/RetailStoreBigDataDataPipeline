@@ -5,12 +5,12 @@ import java.time.{Instant, ZoneId}
 object Domain {
   case class Store(code: String, location: Location)
 
-  case class Location(postalCode: String, city: String, state: String,countryCode: String)
+  case class Location( city: String, state: String,countryCode: String)
 
-  case class ItemSale(productCode:String, quantity: Int, unitAmount: BigDecimal, totalAmount: BigDecimal = 0)
+  case class ItemSale(productCode:String, quantity: Int, unitAmount: BigDecimal, totalAmount: BigDecimal = 0, category: String)
 
   object ItemSale{
-    def apply(productCode: String ,quantity: Int, unitAmount: BigDecimal) = new ItemSale(productCode,quantity,unitAmount, totalAmount = unitAmount * quantity)
+    def apply(productCode: String ,quantity: Int, unitAmount: BigDecimal, category: String) = new ItemSale(productCode,quantity,unitAmount, totalAmount = unitAmount * quantity,category)
 
   }
 

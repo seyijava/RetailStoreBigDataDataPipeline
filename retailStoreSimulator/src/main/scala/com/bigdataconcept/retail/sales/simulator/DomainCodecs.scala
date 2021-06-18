@@ -1,16 +1,11 @@
-package com.bigdataconcept.spark.retail.sales.analytics.data.ingest.domain
+package com.bigdataconcept.retail.sales.simulator
 
+import Domain.{DailySaleRecord, ItemSale, Location, Store}
+import io.circe.{Decoder, Encoder}
 
-import com.bigdataconcept.spark.retail.sales.analytics.data.ingest.domain.Domain.{DailySale, DailySaleRecord, ItemSale, Location, Store}
-import io.circe.Decoder.Result
-import io.circe.{Decoder, Encoder, HCursor, Json}
-
-import java.time.Instant
 
 
 object DomainCodecs {
-
-
 
   object location{
     implicit val locationDecoder: Decoder[Location] = {
@@ -37,26 +32,26 @@ object DomainCodecs {
 
   object itemSale{
     implicit val itemSaleDecoder: Decoder[ItemSale] ={
-      Decoder.forProduct4("productCode","quantity","unitAmount","category")(ItemSale.apply)
+      Decoder.forProduct6("productCode", "itemDescription","quantity","unitAmount","category", "totalAmount")(ItemSale.apply)
     }
 
     implicit val itemSaleEncoder: Encoder[ItemSale] ={
-      Encoder.forProduct4("productCode","quantity","unitAmount","category"){ i =>
-        (i.productCode,i.quantity,i.totalAmount,i.category)
+      Encoder.forProduct6("productCode"," itemDescription","quantity","unitAmount","category","totalAmount"){ i =>
+        (i.productCode,i.itemDescription,i.quantity,i.unitAmount,i.category,i.totalAmount)
       }
     }
   }
 
-  object dailySale {
+  object dailySaleRecord {
 
     import itemSale._
     import store._
 
-    implicit val dailySaleDecoder: Decoder[DailySale] = {
-      Decoder.forProduct3("store", "itemSale", "transactionDate")(DailySale.apply)
+    implicit val dailySaleRecordDecoder: Decoder[DailySaleRecord] = {
+      Decoder.forProduct3("store", "itemSale", "transactionDate")(DailySaleRecord.apply)
     }
 
-    implicit val dailySaleEncoder: Encoder[DailySale] = {
+    implicit val dailySaleRecordDEncoder: Encoder[DailySaleRecord] = {
       Encoder.forProduct3("store", "itemSale", "transactionDate") { d =>
         (d.store, d.itemSale, d.transactionDate)
       }

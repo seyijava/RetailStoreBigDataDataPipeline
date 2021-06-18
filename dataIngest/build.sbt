@@ -26,7 +26,7 @@ libraryDependencies ++=
     "de.heikoseeberger" %% "akka-http-circe" % "1.15.0",
     "com.typesafe.akka" %% "akka-slf4j" % "2.6.0",
     "ch.qos.logback" % "logback-classic" % "1.2.3",
-      "com.typesafe.akka" %% "akka-discovery" % AkkaVersion
+
   )
 
 version in Docker := "latest"
@@ -34,3 +34,5 @@ dockerExposedPorts in Docker := Seq(9090)
 dockerRepository := Some("akka-retail-store-data-ingest")
 dockerBaseImage := "java"
 enablePlugins(JavaAppPackaging)
+
+

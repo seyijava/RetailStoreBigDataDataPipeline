@@ -12,7 +12,7 @@ class KafkaStoreIdPartitioner extends Partitioner{
     if ((keyBytes == null) || (!key.isInstanceOf[String]))
       throw new InvalidRecordException("All messages must have store code name as key")
     val storeKey = key.asInstanceOf[String]
-     storePartitionData.getOrElse(storeKey,defaultPartition)
+      storePartitionData.getOrElse(storeKey,defaultPartition)
   }
 
   override def close(): Unit = {}

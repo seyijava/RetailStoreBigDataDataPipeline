@@ -5,7 +5,8 @@ AND DURABLE_WRITES = true;
 CREATE TABLE if not  exists retailsales.dailySales(
   storeCode text,
   city text,
-  postalCode text,
+  country text,
+  category text,
   state text,
   productCode text,
   quantity int,
@@ -14,7 +15,7 @@ CREATE TABLE if not  exists retailsales.dailySales(
   transactionDate timestamp,
   salemonth int,
   saleyear int,
-  PRIMARY KEY ((saleMonth, saleYear),transactionDate));
+  PRIMARY KEY ((storeCode,saleMonth, saleYear),transactionDate));
 
 drop table retailsales.dailySales
 

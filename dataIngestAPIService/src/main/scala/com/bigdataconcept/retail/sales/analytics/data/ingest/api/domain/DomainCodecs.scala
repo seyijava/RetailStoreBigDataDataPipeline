@@ -9,12 +9,12 @@ object DomainCodecs {
 
   object location{
     implicit val locationDecoder: Decoder[Location] = {
-      Decoder.forProduct4("postalCode", "city", "state","countryCode")(Location.apply)
+      Decoder.forProduct3( "city", "state","countryCode")(Location.apply)
     }
 
     implicit val locationEncoder: Encoder[Location] = {
-      Encoder.forProduct4("postalCode","city","state","countryCode"){e =>
-        (e.city,e.postalCode,e.state,e.countryCode)
+      Encoder.forProduct3("city","state","countryCode"){e =>
+        (e.city,e.state,e.countryCode)
       }
     }
   }
@@ -32,12 +32,12 @@ object DomainCodecs {
 
   object itemSale{
     implicit val itemSaleDecoder: Decoder[ItemSale] ={
-      Decoder.forProduct3("productCode","quantity","unitAmount")(ItemSale.apply)
+      Decoder.forProduct4("productCode","quantity","unitAmount","category")(ItemSale.apply)
     }
 
     implicit val itemSaleEncoder: Encoder[ItemSale] ={
-      Encoder.forProduct3("productCode","quantity","unitAmount"){ i =>
-        (i.productCode,i.quantity,i.totalAmount)
+      Encoder.forProduct4("productCode","quantity","unitAmount","category"){ i =>
+        (i.productCode,i.quantity,i.unitAmount,i.category)
       }
     }
   }

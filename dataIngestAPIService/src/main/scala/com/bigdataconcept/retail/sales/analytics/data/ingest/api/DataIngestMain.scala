@@ -18,6 +18,8 @@ object DataIngestMain extends App with AppConfig{
 
   implicit val system = ActorSystem("DataIngestService",config)
 
+
+
   implicit val mat: ActorMaterializer = ActorMaterializer()
 
   implicit val ec: ExecutionContext = system.dispatcher
@@ -31,7 +33,7 @@ object DataIngestMain extends App with AppConfig{
   val kafkaProducerService =  KafkaProducerService(kafkaTopic)
 
 
-   val storeNumber = (1 to 100)
+  /* val storeNumber = (1 to 100)
 
     val storeCodes = storeNumber.map(n => {
        if(n <= 9){
@@ -53,9 +55,9 @@ object DataIngestMain extends App with AppConfig{
   val location = Location("2334","monctor","lagos","US")
   val store = Store(location=location,code=storeCode)
   val saleRecord = DailySaleRecord(store=store,ItemSale("12233",2,45),Instant.now)
-  val done = kafkaProducerService.sendDailySalesRecord(saleRecord)}
+  val done = kafkaProducerService.sendDailySalesRecord(saleRecord)}*/
 
-  //val apiRoute = new DataIngestAPIRoute(kafkaProducerService)
+  val apiRoute = new DataIngestAPIRoute(kafkaProducerService)
 
-   //Http().bindAndHandle(apiRoute.route, httpHost, httpPort)
+   Http().bindAndHandle(apiRoute.route, httpHost, httpPort)
 }

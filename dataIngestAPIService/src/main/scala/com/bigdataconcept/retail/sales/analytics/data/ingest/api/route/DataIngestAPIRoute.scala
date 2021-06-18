@@ -16,11 +16,12 @@ class DataIngestAPIRoute(kafkaProducerService: KafkaProducerService) (implicit e
     pathEndOrSingleSlash {
       post {
         entity(as[DailySaleRecord]) { dailySaleRecord =>
+           println(dailySaleRecord)
           onComplete(kafkaProducerService.sendDailySalesRecord(dailySaleRecord)) { done =>
             done match
             {
               case Success(_) => complete(StatusCodes.Created)
-              case Failure(ex) => complete(StatusCodes.BadRequest, ex.toString)
+              case Failure(ex) => complete(StatusCodes.InternalServerError, ex.toString)
             }
           }
         }

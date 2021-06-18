@@ -15,9 +15,11 @@ import org.apache.kafka.common.serialization.{ByteArrayDeserializer, StringDeser
 import scala.concurrent.ExecutionContext
 import akka.stream.{ActorMaterializerSettings, Supervision}
 
-object DataIngestMain extends App  with AppConfig {
+object DataPipeLineMain extends App  with AppConfig {
 
   implicit val system = ActorSystem("RetailStoreDataIngest")
+
+   println("\n\n\n" + brokerUrl)
 
   val decider: Supervision.Decider = { e =>
     system.log.error("Unhandled exception in stream", e.printStackTrace())
@@ -40,8 +42,6 @@ object DataIngestMain extends App  with AppConfig {
       .withBootstrapServers(brokerUrl)
       .withGroupId(consumerGroupId)
       .withProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
-
   val dailySalesDataPipeLine =  DailySalesDataPipeLine(keyspace,table,kafkaTopic,maxPartitions)
-
   dailySalesDataPipeLine.pipeline.run()
 }
